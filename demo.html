@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery.lookingfor demo page</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="stylesheet" href="http://yandex.st/bootstrap/3.0.3/css/bootstrap.min.css">
+	<script src="http://yandex.st/jquery/2.0.3/jquery.min.js"></script>
+	<script src="http://yandex.st/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script src="jquery.lookingfor.js"></script>
+	<script>
+	jQuery(function($) {
+		$.getJSON('demolist.json', function(data) {
+			// Renders street list
+			var list = [];
+			for (var i = 0, item; i < data.features.length; i++) {
+				item = data.features[i];
+				list.push(item.properties.title);
+			}
+			$('ul').html('<li>' + list.join('</li><li>') + '</li>');
+			$('#count').text(data.features.length);
+
+			// Init lookingfor
+			$('ul').lookingfor({
+				input: $('input'),
+				items: 'li'
+			});
+		}); 
+	});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h2>Улицы Москвы [<span id="count"></span>]</h2>
+
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<div class="col-sm-5">
+					<input type="search" class="form-control" placeholder="Поисковый запрос">
+				</div>
+			</div>
+		</form>
+		
+		<ul></ul>
+	</div>
+</body>
+</html>
