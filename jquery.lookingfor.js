@@ -44,28 +44,21 @@
 		if ( !this._items.length )
 			return;
 
-		if ( !this._items.length )
-			return;
-
-		var self = this;
-
 		if ( this._input.length ) {
-			this._input.on('keyup', function() {
-				clearTimeout(self.queryTimer);
-				var value = (self._input.val() || '').toLowerCase();
-
-				if ( value === self.value )
+			this._input.on('keyup', this._debounce(function() {
+				var value = (this._input.val() || '').toLowerCase();
+				
+				if ( value === this.value ) {
 					return;
-
-				if ( value.length >= self.queryCharLimit ) {
-					self.queryTimer = setTimeout(function() {
-						self.value = value;
-						self.query();
-					}, self.queryDelay);
-				} else if ( self.hiddenCount ) {
-					self.showAll();
 				}
-			});
+
+				if ( value.length >= this.queryCharLimit ) {
+					this.value = value;
+					this.query();
+				} else {
+					this.showAll();
+				}
+			}, this.queryDelay, this));
 		}
 
 		this.indexing();
@@ -101,6 +94,18 @@
 		showAll: function() {
 			this._items.show();
 			this.hiddenCount = 0;
+		},
+
+		_debounce: function(fn, delay, context) {
+			var timer = null,
+				self = this;
+
+			return function() {
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					fn.call(context || self);
+				}, delay);
+			};
 		}
 	};
 }));
