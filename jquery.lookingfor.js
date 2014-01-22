@@ -7,6 +7,10 @@
  * @author Alexander Burtsev
  * @copyright 2014 Alexander Burtsev
  * @license MIT
+ * 
+ * @todo: highlight matched text
+ * @todo: nested items
+ * @todo: hide animation
  */
 (function(factory) {
 	if ( typeof define === 'function' && define.amd ) {
@@ -35,6 +39,8 @@
 			queryTimer: null,
 			queryDelay: 300, // ms
 
+			hiddenListClass: 'lflist_hidden',
+			hiddenItemClass: 'lfitem_hidden',
 			hiddenCount: 0
 		}, opts || {});
 		
@@ -52,8 +58,8 @@
 					return;
 				}
 
+				this.value = value;
 				if ( value.length >= this.queryCharLimit ) {
-					this.value = value;
 					this.query();
 				} else {
 					this.showAll();
@@ -61,10 +67,28 @@
 			}, this.queryDelay, this));
 		}
 
+		this.addStyles();
 		this.indexing();
 	}
 
 	Lookingfor.prototype = {
+		addStyles: function() {
+			var _head = $('head'),
+				style = $('<style>').get(0), sheet,
+				selector = '.' + this.hiddenListClass + ' .' + this.hiddenItemClass,
+				rules = 'display: none';
+
+			style.appendChild(document.createTextNode('')); // webkit fix
+			_head.append(style);
+			sheet = style.sheet || {};
+
+			if ( sheet.insertRule ) {
+				sheet.insertRule(selector + '{' + rules + '}', 0);
+			} else if ( sheet.addRule ) { // old IE
+				sheet.addRule(selector, rules, 0);
+			}
+ 		},
+
 		indexing: function() {
 			var self = this;
 
@@ -73,26 +97,44 @@
 
 				self.cache.push({
 					node: _item,
-					text: (_item.text() || '').toLowerCase()
+					text: (_item.text() || '').toLowerCase(),
+					hidden: false
 				});
 			});
 		},
 
 		query: function(value) {
 			value = value || this.value;
+			this.hiddenCount = 0;
+
 			for (var i = 0, length = this.cache.length, item; i < length; i++) {
 				item = this.cache[i];
 				if ( item.text.indexOf(value) === -1 ) {
-					item.node.hide();
+					if ( !item.hidden ) {
+						item.hidden = true;
+						item.node.addClass(this.hiddenItemClass);
+					}
 					this.hiddenCount += 1;
-				} else {
-					item.node.show();
-				}	
+				} else if ( item.hidden ) {
+					item.hidden = false;
+					item.node.removeClass(this.hiddenItemClass);
+				}
 			}
+
+			this._container.addClass(this.hiddenListClass);
 		},
 
 		showAll: function() {
-			this._items.show();
+			if ( !this.hiddenCount )
+				return;
+
+			for (var i = 0, length = this.cache.length, item; i < length; i++) {
+				item = this.cache[i];
+				item.hidden = false;
+				item.node.removeClass(this.hiddenItemClass);
+			}
+
+			this._container.removeClass(this.hiddenListClass);
 			this.hiddenCount = 0;
 		},
 
