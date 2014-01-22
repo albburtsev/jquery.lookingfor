@@ -40,7 +40,7 @@
 			queryDelay: 300, // ms
 
 			hiddenListClass: 'lflist_hidden',
-			hiddenItemClass: 'lfitem_hidden',
+			hiddenItemAttr: 'data-lfhidden',
 			hiddenCount: 0
 		}, opts || {});
 		
@@ -75,12 +75,11 @@
 		addStyles: function() {
 			var _head = $('head'),
 				style = $('<style>').get(0), sheet,
-				selector = '.' + this.hiddenListClass + ' .' + this.hiddenItemClass,
+				selector = '.' + this.hiddenListClass + ' [' + this.hiddenItemAttr + ']',
 				rules = 'display: none';
 
-			style.appendChild(document.createTextNode('')); // webkit fix
 			_head.append(style);
-			sheet = style.sheet || {};
+			sheet = style.sheet || document.styleSheets[0]; // IE fix
 
 			if ( sheet.insertRule ) {
 				sheet.insertRule(selector + '{' + rules + '}', 0);
@@ -96,7 +95,7 @@
 				var _item = $(this);
 
 				self.cache.push({
-					node: _item,
+					node: this,
 					text: (_item.text() || '').toLowerCase(),
 					hidden: false
 				});
@@ -112,12 +111,12 @@
 				if ( item.text.indexOf(value) === -1 ) {
 					if ( !item.hidden ) {
 						item.hidden = true;
-						item.node.addClass(this.hiddenItemClass);
+						item.node.setAttribute(this.hiddenItemAttr, '');
 					}
 					this.hiddenCount += 1;
 				} else if ( item.hidden ) {
 					item.hidden = false;
-					item.node.removeClass(this.hiddenItemClass);
+					item.node.removeAttribute(this.hiddenItemAttr);
 				}
 			}
 
@@ -131,7 +130,7 @@
 			for (var i = 0, length = this.cache.length, item; i < length; i++) {
 				item = this.cache[i];
 				item.hidden = false;
-				item.node.removeClass(this.hiddenItemClass);
+				item.node.removeAttribute(this.hiddenItemAttr);
 			}
 
 			this._container.removeClass(this.hiddenListClass);
