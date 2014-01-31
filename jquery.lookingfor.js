@@ -37,7 +37,7 @@
 			cache: [],
 			queryCharLimit: 3,
 			queryTimer: null,
-			queryDelay: 300, // ms
+			queryDelay: 50, // ms
 
 			hiddenListClass: 'lflist_hidden',
 			hiddenItemAttr: 'data-lfhidden',
@@ -146,6 +146,16 @@
 				timer = setTimeout(function() {
 					fn.call(context || self);
 				}, delay);
+			};
+		},
+
+		_profiler: function(fn, label, context) {
+			var self = this;
+
+			return function() {
+				var start = new Date();
+				fn.call(context || self);
+				console.log(label || '', (new Date).getTime() - start.getTime());
 			};
 		}
 	};
