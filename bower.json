@@ -1,0 +1,13 @@
+{
+  "name": "jquery.lookingfor",
+  "version": "0.0.1",
+  "main": ["jquery.lookingfor.js"],
+  "ignore": [
+  	"countries.csv",
+  	"demo.html",
+  	"demolist.json"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  }
+}
