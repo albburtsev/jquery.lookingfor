@@ -1,0 +1,29 @@
+{
+  "name": "lookingfor",
+  "title": "jQuery Looking For",
+  "description": "Searches text in list items on the page, hides unmatched items",
+  "keywords": [
+    "search",
+    "input",
+    "highlight",
+    "filter"
+  ],
+  "version": "0.0.2",
+  "author": {
+    "name": "Alexander Burtsev",
+    "url": "http://burtsev.me"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/albburtsev/jquery.lookingfor/blob/master/LICENSE"
+    }
+  ],
+  "bugs": "https://github.com/albburtsev/jquery.lookingfor/issues",
+  "homepage": "https://github.com/albburtsev/jquery.lookingfor",
+  "docs": "https://github.com/albburtsev/jquery.lookingfor/blob/master/README.md",
+  "demo": "http://albburtsev.github.io/jquery.lookingfor/",
+  "dependencies": {
+    "jquery": ">=1.7"
+  }
+}

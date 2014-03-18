@@ -1,6 +1,6 @@
 {
   "name": "jquery.lookingfor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": ["jquery.lookingfor.js"],
   "ignore": [
   	"countries.csv",
