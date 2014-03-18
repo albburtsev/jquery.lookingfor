@@ -8,7 +8,6 @@
  * @copyright 2014 Alexander Burtsev
  * @license MIT
  * 
- * @todo: highlight matched text
  * @todo: nested items
  * @todo: hide animation
  */
@@ -39,6 +38,10 @@
 			queryTimer: null,
 			queryDelay: 50, // ms
 
+			highlight: false,
+			highlightClass: 'lfitem_match',
+			highlightColor: '#ffde00',
+
 			hiddenListClass: 'lflist_hidden',
 			hiddenItemAttr: 'data-lfhidden',
 			hiddenCount: 0
@@ -53,7 +56,8 @@
 		if ( this._input.length ) {
 			this._input.on('keyup', this._debounce(function() {
 				var value = (this._input.val() || '').toLowerCase();
-				
+				value = $.trim(value);
+
 				if ( value === this.value ) {
 					return;
 				}
@@ -75,16 +79,23 @@
 		addStyles: function() {
 			var _head = $('head'),
 				style = $('<style>').get(0), sheet,
-				selector = '.' + this.hiddenListClass + ' [' + this.hiddenItemAttr + ']',
-				rules = 'display: none';
+				styles = [
+					['.' + this.hiddenListClass + ' [' + this.hiddenItemAttr + ']', 'display: none'],
+					['.' + this.highlightClass, 'background: ' + this.highlightColor]
+				];
 
 			_head.append(style);
 			sheet = style.sheet || document.styleSheets[0]; // IE fix
 
-			if ( sheet.insertRule ) {
-				sheet.insertRule(selector + '{' + rules + '}', 0);
-			} else if ( sheet.addRule ) { // old IE
-				sheet.addRule(selector, rules, 0);
+			for (var i = 0, selector, rules; i < styles.length; i++) {
+				selector = styles[i][0];
+				rules = styles[i][1];
+
+				if ( sheet.insertRule ) {
+					sheet.insertRule(selector + '{' + rules + '}', 0);
+				} else if ( sheet.addRule ) { // old IE
+					sheet.addRule(selector, rules, 0);
+				}
 			}
  		},
 
@@ -96,6 +107,7 @@
 
 				self.cache.push({
 					node: this,
+					html: this.innerHTML,
 					text: (_item.text() || '').toLowerCase(),
 					hidden: false
 				});
@@ -105,6 +117,9 @@
 		query: function(value) {
 			value = value || this.value;
 			this.hiddenCount = 0;
+
+			var	re = new RegExp(value, 'ig'),
+				paint = $.proxy(this._paint, this);
 
 			for (var i = 0, length = this.cache.length, item; i < length; i++) {
 				item = this.cache[i];
@@ -117,6 +132,18 @@
 				} else if ( item.hidden ) {
 					item.hidden = false;
 					item.node.removeAttribute(this.hiddenItemAttr);
+				}
+
+				if ( this.highlight ) {
+					if ( item.matched ) {
+						item.matched = false;
+						item.node.innerHTML = item.html;
+					}
+
+					if ( !item.hidden ) {
+						item.matched = true;
+						item.node.innerHTML = item.html.replace(re, paint);
+					}
 				}
 			}
 
@@ -131,10 +158,19 @@
 				item = this.cache[i];
 				item.hidden = false;
 				item.node.removeAttribute(this.hiddenItemAttr);
+
+				if ( item.matched ) {
+					item.matched = false;
+					item.node.innerHTML = item.html;
+				}
 			}
 
 			this._container.removeClass(this.hiddenListClass);
 			this.hiddenCount = 0;
+		},
+
+		_paint: function($0) {
+			return '<span class="' + this.highlightClass + '">' + $0 + '</span>';
 		},
 
 		_debounce: function(fn, delay, context) {

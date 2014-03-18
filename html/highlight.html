@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery.lookingfor demo page</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="stylesheet" href="http://yandex.st/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
+	<script src="http://yandex.st/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://yandex.st/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+	<script src="../jquery.lookingfor.js"></script>
+	<script>
+	jQuery(function($) {
+		$.get('data/countries.csv', function(data) {
+			var	_list = $('ul'),
+				_count = $('#count');
+
+			data = data.split('\n');
+			data.sort();
+
+			_list
+				.html('<li>' + data.join('</li><li>') + '</li>')
+				.lookingfor({
+					input: $('input'),
+					items: 'li',
+					highlight: true
+				});
+			_count.text(data.length);
+		}); 
+	});
+	hljs.initHighlightingOnLoad();
+	</script>
+	<style>
+	.hljs {
+		padding: 0;
+		background: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Countries (<span id="count"></span>)</h2>
+
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<div class="col-sm-5">
+
+<pre><code class="javascript">$('ul').lookingfor({
+	input: $('input'),
+	items: 'li',
+	highlight: true
+});
+</code></pre>
+
+					<input type="search" class="form-control" placeholder="Search query" autofocus="autofocus" />
+				</div>
+			</div>
+		</form>
+		
+		<ul></ul>
+	</div>
+</body>
+</html>

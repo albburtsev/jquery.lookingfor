@@ -40,3 +40,10 @@ jQuery(function($) {
 	});
 });
 ```
+
+### Options
+
+ * __input__ — input text field;
+ * __items__ — item's selector;
+ * __highlight__ — sets ```true``` for highlight matched text, default — ```false```;
+ * __highlightColor__ — ```#RRGGBB``` color for matched text.
