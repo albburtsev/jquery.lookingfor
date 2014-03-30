@@ -1,6 +1,8 @@
 jquery.lookingfor
 =================
 
+![Screenshot](https://rawgithub.com/albburtsev/jquery.lookingfor/master/screenshots/highlight.png)
+
 Searches text in list items on the page, hides unmatched items.
 
 [Live demo](http://albburtsev.github.io/jquery.lookingfor/)
