@@ -2,10 +2,8 @@
  * jQuery.lookingfor
  * Searches text in list items on the page, hides unmatched items
  * 
- * @version 0.0.0
  * @requires jQuery
- * @author Alexander Burtsev
- * @copyright 2014 Alexander Burtsev
+ * @author Alexander Burtsev, http://burtsev.me
  * @license MIT
  * 
  * @todo: nested items
@@ -24,7 +22,7 @@
 		return this.each(function() {
 			new Lookingfor(this, opts);
 		});
-	}
+	};
 
 	function Lookingfor(container, opts) {
 		$.extend(this, {
@@ -46,15 +44,16 @@
 			hiddenItemAttr: 'data-lfhidden',
 			hiddenCount: 0
 		}, opts || {});
-		
+
 		this._items = this.items ? $(this.items, container) : this._container.children();
 		this._input = $(this.input);
 
-		if ( !this._items.length )
+		if ( !this._items.length ) {
 			return;
+		}
 
 		if ( this._input.length ) {
-			this._input.on('keyup', this._debounce(function() {
+			this._input.on('keyup change', this._debounce(function() {
 				var value = (this._input.val() || '').toLowerCase();
 				value = $.trim(value);
 
@@ -151,8 +150,9 @@
 		},
 
 		showAll: function() {
-			if ( !this.hiddenCount )
+			if ( !this.hiddenCount ) {
 				return;
+			}
 
 			for (var i = 0, length = this.cache.length, item; i < length; i++) {
 				item = this.cache[i];
@@ -178,9 +178,10 @@
 				self = this;
 
 			return function() {
+				var args = arguments;
 				clearTimeout(timer);
 				timer = setTimeout(function() {
-					fn.call(context || self);
+					fn.apply(context || self, args);
 				}, delay);
 			};
 		},
@@ -191,7 +192,7 @@
 			return function() {
 				var start = new Date();
 				fn.call(context || self);
-				console.log(label || '', (new Date).getTime() - start.getTime());
+				console.log(label || '', (new Date()).getTime() - start.getTime());
 			};
 		}
 	};

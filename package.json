@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/albburtsev/jquery.lookingfor/issues"
   },
-  "homepage": "https://github.com/albburtsev/jquery.lookingfor"
+  "homepage": "https://github.com/albburtsev/jquery.lookingfor",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs-checker": "^0.4.1",
+    "matchdep": "^0.3.0"
+  }
 }
