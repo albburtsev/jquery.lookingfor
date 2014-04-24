@@ -1,6 +1,6 @@
 {
   "name": "jquery.lookingfor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Searches text in list items on the page, hides unmatched items",
   "private": true,
   "repository": {
