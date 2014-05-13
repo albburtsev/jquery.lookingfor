@@ -1,7 +1,7 @@
 {
   "name": "jquery.lookingfor",
   "version": "0.0.3",
-  "description": "Searches text in list items on the page, hides unmatched items",
+  "description": "Fast search as you type jQuery-plugin",
   "private": true,
   "repository": {
     "type": "git",
@@ -10,7 +10,10 @@
   "keywords": [
     "jquery",
     "plugin",
-    "search"
+    "search",
+    "highlight",
+    "client search",
+    "page search"
   ],
   "author": {
     "name": "Alexander Burtsev",
