@@ -10,7 +10,7 @@
 	<script src="http://yandex.st/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://yandex.st/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
-	<script src="../jquery.lookingfor.js"></script>
+	<script src="../jquery.lookingfor.min.js"></script>
 	<script>
 	jQuery(function($) {
 		$.get('data/countries.csv', function(data) {
@@ -22,10 +22,7 @@
 
 			_list
 				.html('<li>' + data.join('</li><li>') + '</li>')
-				.lookingfor({
-					input: $('input'),
-					items: 'li'
-				});
+				.lookingfor({ input: 'input' });
 			_count.text(data.length);
 		}); 
 	});
@@ -46,10 +43,7 @@
 			<div class="form-group">
 				<div class="col-sm-5">
 
-<pre><code class="javascript">$('ul').lookingfor({
-	input: $('input'),
-	items: 'li'
-});
+<pre><code class="javascript">$('ul').lookingfor({ input: 'input' });
 </code></pre>
 
 					<input type="search" class="form-control" placeholder="Search query" autofocus="autofocus" />

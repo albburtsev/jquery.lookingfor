@@ -27,8 +27,11 @@
 	 * @param {Object} opts
 	 * @param {String} [opts.input] Selector for input field
 	 * @param {String} [opts.items='li'] Selector for nested items
+	 * @param {Number} [opts.queryCharLimit = 1]
+	 * @param {Number} [opts.queryDelay = 100] ms
 	 * @param {Boolean} [opts.highlight=false] Highlight matched text
 	 * @param {Boolean} [opts.highlightColor='#ffde00'] Background color for matched text
+	 * @param {Function(HTMLElement item, String query)} [opts.onFound] Callback, calls when text found in element
 	 *
 	 * @todo: nested items
 	 * @todo: show/hide animation
@@ -42,9 +45,9 @@
 			items: 'li',
 			value: '',
 			cache: [],
-			queryCharLimit: 3,
+			queryCharLimit: 1,
 			queryTimer: null,
-			queryDelay: 50, // ms
+			queryDelay: 100, // ms
 
 			highlight: false,
 			highlightClass: 'lfitem_match',
@@ -52,7 +55,9 @@
 
 			hiddenListClass: 'lflist_hidden',
 			hiddenItemAttr: 'data-lfhidden',
-			hiddenCount: 0
+			hiddenCount: 0,
+
+			onFound: null
 		}, opts || {});
 
 		this._items = $(this.items, container);
@@ -169,6 +174,10 @@
 						item.matched = true;
 						item.node.innerHTML = item.html.replace(re, paint);
 					}
+				}
+
+				if ( this.onFound && !item.hidden ) {
+					this.onFound(item.node, value);
 				}
 			}
 

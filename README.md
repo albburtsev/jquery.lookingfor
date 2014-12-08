@@ -5,6 +5,8 @@ jquery.lookingfor
 
 Fast search as you type jQuery-plugin.
 
+It's very small (minified — 2.5kb, gzipped — 1.2kb), very fast and supported old browsers (IE6+).
+
 Plugin __jquery.lookingfor__ searches text in list items (```<li>```) and hides unmatched items.
 It works not only for ```<li>```, but with anyone HTML-elements on the page.
 Any input fields (```input, textarea```) can be transformed into search filter with __jquery.lookingfor__.
@@ -62,4 +64,5 @@ All options are optional.
  * __input__ — selector for input field;
  * __items__ — item's selector, default – ```'li'```;
  * __highlight__ — set ```true``` for highlight matched text, default — ```false```;
- * __highlightColor__ — ```#RRGGBB``` background color for matched text, default – ```#FFDE00```
+ * __highlightColor__ — ```#RRGGBB``` background color for matched text, default – ```#FFDE00```;
+ * __onFound {Function(HTMLElement item, String query)}__ — callback, calls when text found.
