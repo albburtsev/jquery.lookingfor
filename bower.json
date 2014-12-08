@@ -6,7 +6,7 @@
   	"Gruntfile.js",
     ".jscs.json",
     ".jshintrc",
-    "jquery.lookingfor.js",
+    "lookingfor.jquery.json",
     "screenshots/",
     "html/",
   ],
