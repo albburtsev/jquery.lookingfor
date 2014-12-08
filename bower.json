@@ -3,9 +3,12 @@
   "version": "0.0.4",
   "main": ["jquery.lookingfor.js"],
   "ignore": [
-  	"countries.csv",
-  	"demo.html",
-  	"demolist.json"
+  	"Gruntfile.js",
+    ".jscs.json",
+    ".jshintrc",
+    "jquery.lookingfor.js",
+    "screenshots/",
+    "html/",
   ],
   "dependencies": {
     "jquery": ">=1.7"
