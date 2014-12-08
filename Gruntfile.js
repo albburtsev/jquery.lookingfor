@@ -16,9 +16,7 @@ module.exports = function(grunt) {
 
 		jshint: {
 			options: {
-				globals: {
-					jQuery: true
-				}
+				jshintrc: '.jshintrc'
 			},
 			app: ['<%= jsSource %>']
 		},

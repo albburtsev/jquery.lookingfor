@@ -184,16 +184,6 @@
 					fn.apply(context || self, args);
 				}, delay);
 			};
-		},
-
-		_profiler: function(fn, label, context) {
-			var self = this;
-
-			return function() {
-				var start = new Date();
-				fn.call(context || self);
-				console.log(label || '', (new Date()).getTime() - start.getTime());
-			};
 		}
 	};
 }));
