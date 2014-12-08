@@ -5,9 +5,6 @@
  * @requires jQuery
  * @author Alexander Burtsev, http://burtsev.me
  * @license MIT
- * 
- * @todo: nested items
- * @todo: hide animation
  */
 (function(factory) {
 	if ( typeof define === 'function' && define.amd ) {
@@ -24,12 +21,25 @@
 		});
 	};
 
+	/**
+	 * @class
+	 * @param {HTMLElement} container
+	 * @param {Object} opts
+	 * @param {String} [opts.input] Selector for input field
+	 * @param {String} [opts.items='li'] Selector for nested items
+	 * @param {Boolean} [opts.highlight=false] Highlight matched text
+	 * @param {Boolean} [opts.highlightColor='#ffde00'] Background color for matched text
+	 *
+	 * @todo: nested items
+	 * @todo: show/hide animation
+	 */
 	function Lookingfor(container, opts) {
 		$.extend(this, {
 			_input: null,
 			_items: null,
 			_container: $(container),
 
+			items: 'li',
 			value: '',
 			cache: [],
 			queryCharLimit: 3,
@@ -45,7 +55,7 @@
 			hiddenCount: 0
 		}, opts || {});
 
-		this._items = this.items ? $(this.items, container) : this._container.children();
+		this._items = $(this.items, container);
 		this._input = $(this.input);
 
 		if ( !this._items.length ) {
@@ -74,7 +84,12 @@
 		this.indexing();
 	}
 
-	Lookingfor.prototype = {
+	Lookingfor.prototype = 
+	/** @lends Lookingfor */
+	{
+		/**
+		 * Generates and adds styles for hiding and highlighting items
+		 */
 		addStyles: function() {
 			var _head = $('head'),
 				style = $('<style>').get(0), sheet,
@@ -98,6 +113,9 @@
 			}
  		},
 
+ 		/**
+ 		 * Caches html and text for all items
+ 		 */
 		indexing: function() {
 			var self = this;
 
@@ -113,6 +131,12 @@
 			});
 		},
 
+		/**
+		 * Looking for given value in item's text
+		 * Sets attributes, which changes item visibility
+		 * Highlights matched text
+		 * @param  {String} value
+		 */
 		query: function(value) {
 			value = value || this.value;
 			this.hiddenCount = 0;
@@ -125,11 +149,13 @@
 				if ( item.text.indexOf(value) === -1 ) {
 					if ( !item.hidden ) {
 						item.hidden = true;
+						// Speed up DOM changes without jQuery methods
 						item.node.setAttribute(this.hiddenItemAttr, '');
 					}
 					this.hiddenCount += 1;
 				} else if ( item.hidden ) {
 					item.hidden = false;
+					// Speed up DOM changes without jQuery methods
 					item.node.removeAttribute(this.hiddenItemAttr);
 				}
 
@@ -149,6 +175,10 @@
 			this._container.addClass(this.hiddenListClass);
 		},
 
+		/**
+		 * Cancels all changes
+		 * @return {[type]} [description]
+		 */
 		showAll: function() {
 			if ( !this.hiddenCount ) {
 				return;
@@ -169,10 +199,22 @@
 			this.hiddenCount = 0;
 		},
 
+		/**
+		 * Sets container for highlighting
+		 * @param  {String} $0
+		 * @ignore
+		 */
 		_paint: function($0) {
 			return '<span class="' + this.highlightClass + '">' + $0 + '</span>';
 		},
 
+		/**
+		 * Debounce decorator
+		 * @param {Function} fn
+		 * @param {Number} delay
+		 * @param {Object} context
+		 * @ignore
+		 */
 		_debounce: function(fn, delay, context) {
 			var timer = null,
 				self = this;
