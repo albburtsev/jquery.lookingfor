@@ -3,13 +3,13 @@ jquery.lookingfor
 
 ![Screenshot](https://rawgithub.com/albburtsev/jquery.lookingfor/master/screenshots/highlight.png)
 
-Fast search as you type jQuery-plugin.
+Fast search as you type jQuery plugin.
 
-It's very small (minified — 2.5kb, gzipped — 1.2kb), very fast and supported old browsers (IE6+).
+It's very small (minified — 2.5kb, gzipped — 1.2kb), very fast and supports old browsers (IE6+).
 
-Plugin __jquery.lookingfor__ searches text in list items (```<li>```) and hides unmatched items.
-It works not only for ```<li>```, but with anyone HTML-elements on the page.
-Any input fields (```input, textarea```) can be transformed into search filter with __jquery.lookingfor__.
+__jquery.lookingfor__ plugin searches text in list items (```<li>```) and hides unmatched items.
+It works not only for `<li>`s, but for any HTML element on a page.
+Any input field (```input, textarea```) can be transformed to search filter with __jquery.lookingfor__.
 
 [Live demo](http://albburtsev.github.io/jquery.lookingfor/)
 
@@ -34,7 +34,7 @@ Include [jQuery](http://jquery.com) and __jquery.lookingfor__ on your page:
 <script src="jquery.lookingfor.js"></script>
 ```
 
-Prepare list items for following search and input field (optional):
+Prepare list of items for following search and an input field (optional):
 
 ```html
 <input type="search" name="query" />
@@ -46,7 +46,7 @@ Prepare list items for following search and input field (optional):
 </ul>
 ```
 
-Call method ```lookingfor()``` with necessary options:
+Call ```lookingfor()``` method with necessary options:
 
 ```js
 jQuery(function($) {
@@ -61,8 +61,8 @@ jQuery(function($) {
 
 All options are optional.
 
- * __input__ — selector for input field;
+ * __input__ — input field's selector;
  * __items__ — item's selector, default – ```'li'```;
- * __highlight__ — set ```true``` for highlight matched text, default — ```false```;
+ * __highlight__ — set ```true``` to highlight matched text, default — ```false```;
  * __highlightColor__ — ```#RRGGBB``` background color for matched text, default – ```#FFDE00```;
- * __onFound {Function(HTMLElement item, String query)}__ — callback, calls when text found.
+ * __onFound {Function(HTMLElement item, String query)}__ — callback, will be called when text is found.
