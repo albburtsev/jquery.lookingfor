@@ -7,8 +7,8 @@
     ".jscs.json",
     ".jshintrc",
     "lookingfor.jquery.json",
-    "screenshots/",
-    "html/",
+    "screenshots",
+    "html"
   ],
   "dependencies": {
     "jquery": ">=1.7"
