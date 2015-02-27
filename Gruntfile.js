@@ -6,11 +6,12 @@ module.exports = function(grunt) {
 		.forEach(grunt.loadNpmTasks);
 
 	grunt.initConfig({
-		jsSource: 'jquery.lookingfor.js',
+		jsSource: 'src/*.js',
+		jsDist: 'dist/',
 		banner: 
 			'/**\n' +
-			' * jquery.lookingfor\n' +
-			' * @author Alexander Burtsev, http://burtsev.me, <%= grunt.template.today("yyyy") %>\n' +
+			' * jquery.lookingfor — fast search as you type\n' +
+			' * @author Alexander Burtsev, http://burtsev.me, 2014—<%= grunt.template.today("yyyy") %>\n' +
 			' * @license MIT\n' +
 			' */\n',
 
@@ -28,13 +29,30 @@ module.exports = function(grunt) {
 			app: ['<%= jsSource %>']
 		},
 
+		copy: {
+			options: {
+				process: function (content, srcpath) {
+					return grunt.config.get('banner') + content;
+				}
+			},
+			source: {
+				files: [{
+					expand: true,
+					cwd: 'src/',
+					src: ['**'],
+					dest: 'dist/'
+				}]
+			}
+		},
+
 		uglify: {
 			options: {
-				banner: '<%= banner %>'
+				banner: '<%= banner %>',
+				sourceMap: true
 			},
 			lookingfor: {
 				files: {
-					'jquery.lookingfor.min.js': ['<%= jsSource %>']
+					'<%= jsDist %>jquery.lookingfor.min.js': ['<%= jsSource %>']
 				}
 			}
 		},
@@ -47,5 +65,5 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['jshint', 'jscs', 'uglify', 'watch']);
+	grunt.registerTask('default', ['jshint', 'jscs', 'copy', 'uglify', 'watch']);
 };

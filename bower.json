@@ -4,9 +4,9 @@
   "main": ["jquery.lookingfor.js"],
   "ignore": [
   	"Gruntfile.js",
+    "package.json",
     ".jscs.json",
     ".jshintrc",
-    "lookingfor.jquery.json",
     "screenshots",
     "html"
   ],

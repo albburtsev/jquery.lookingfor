@@ -1,9 +1,6 @@
 /**
- * jQuery.lookingfor
- * Searches text in list items on the page, hides unmatched items
- * 
- * @requires jQuery
- * @author Alexander Burtsev, http://burtsev.me
+ * jquery.lookingfor — fast search as you type
+ * @author Alexander Burtsev, http://burtsev.me, 2014—2015
  * @license MIT
  */
 (function(factory) {
