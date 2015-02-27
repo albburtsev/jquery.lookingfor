@@ -1,6 +1,6 @@
 {
   "name": "jquery.lookingfor",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": ["jquery.lookingfor.js"],
   "ignore": [
   	"Gruntfile.js",
