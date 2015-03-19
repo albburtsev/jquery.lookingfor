@@ -2,7 +2,6 @@
   "name": "jquery.lookingfor",
   "version": "0.0.8",
   "description": "Fast search as you type jQuery-plugin",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/albburtsev/jquery.lookingfor.git"
